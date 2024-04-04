@@ -42,7 +42,11 @@ bool testFunction (const double & x_dbl)
     // Error:
     double y_err = abs(y_dbl - y_ref);
 
-    if constexpr (DBG_TST) {
+
+    // Pass/fail:
+    bool in_spec = (y_err < ERR_TOL);
+
+    if (!in_spec) {
         cout << "y_dbl  = " << dec << fixed      << setw(WIDTH) << setprecision(PREC) << setfill(' ') << right
              <<  y_dbl     << endl;
         cout << "y_ref  = " << dec << fixed      << setw(WIDTH) << setprecision(PREC) << setfill(' ') << right
@@ -50,9 +54,6 @@ bool testFunction (const double & x_dbl)
         cout << "y_err  = " << dec << scientific << setw(9)     << setprecision(2)    << setfill(' ') << right
              <<  y_err << endl << endl;
     }
-
-    // Pass/fail:
-    bool in_spec = (y_err < ERR_TOL);
 
     return in_spec;
 }
@@ -62,26 +63,24 @@ bool testFunction (void)
     using namespace std;
 
     // Test params:
-    //uint32_t m_start = 0x000000; // 0.0
-    //uint32_t m_stop  = 0xffffff; // 1.999...
-    //uint32_t m_step  = 0x000101; // sparse test
-//  uint32_t m_step  = 0x000001; // exhaustive test
+    uint32_t m_start = 0x000000; // 0.0
+    uint32_t m_stop  = 0xffffff; // 1.999...
+//    uint32_t m_step  = 0x000101; // sparse test
+    uint32_t m_step  = 0x000001; // exhaustive test
 
     // Initialize test status:
     bool ok_sts = true;
 
-    uint32_t m_step  = 0xeaf11f;
     // Main simulation loop:
-    //for (uint32_t m = m_start; m <= m_stop; m += m_step)
-    //{
-        //double x_dbl = double(m) / double(0x00800000);
-	double x_dbl = double(m_step) / double(0x00800000);
+    for (uint32_t m = m_start; m <= m_stop; m += m_step)
+    {
+        double x_dbl = double(m) / double(0x00800000);
 	//             ---------------------
         bool in_spec = testFunction (x_dbl);
         //             ---------------------
 
         ok_sts &= in_spec;
-    //}
+    }
 
     return ok_sts;
 }

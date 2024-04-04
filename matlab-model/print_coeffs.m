@@ -12,19 +12,19 @@ c = coeffs(:,4);
 K = length(k);
 
 # coeff a:
-A_I =  4;
-A_F = 28;
-A_W = A_I + A_F; # (s4.28)
+A_I =  2;
+A_F = 20;
+A_W = A_I + A_F; # (s2.20)
 
 # coeff b:
-B_I =  4;
-B_F = 28;
-B_W = B_I + B_F; # (s4.28)
+B_I =  3;
+B_F = 13;
+B_W = B_I + B_F; # (s3.13)
 
 # coeff c:
-C_I =  4;
-C_F = 28;
-C_W = C_I + C_F; # (s4.28)
+C_I =  2;
+C_F =  6;
+C_W = C_I + C_F; # (s2.6)
 
 a_q = round(a * (2^A_F));
 b_q = round(b * (2^B_F));
